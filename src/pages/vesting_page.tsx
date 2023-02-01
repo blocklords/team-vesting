@@ -16,26 +16,29 @@ const VestingPage = (props: any) => {
       console.log('contract', contract);
       const startTime = await contract.methods.startTime().call();
       setStartTime(startTime);
-      if (startTime <= Math.round(new Date().getTime() / 1000)) {
-        if (showData === false) {
-          setShowData(true)
-        }
-      }
+      // if (startTime <= Math.round(new Date().getTime() / 1000)) {
+      //   if (showData === false) {
+      //     setShowData(true)
+      //   }
+      // }
       if (address) {
         let totalReleased = await contract.methods.getTotalReleased().call({ from: address });
         totalReleased = parseFloat(Web3.utils.fromWei(totalReleased, "ether")).toFixed(6);
-        console.log(totalReleased, 'totalReleased');
+        // console.log(totalReleased, 'totalReleased');
         setTotalReleased(totalReleased);
         let totalAvailable = await contract.methods.getAvailableAmount().call({ from: address });
         totalAvailable = parseFloat(Web3.utils.fromWei(totalAvailable, "ether")).toFixed(6);
-        if (totalAvailable.toString().substr(-4) === "e+59") {
-          setTotalAvailable(0);
-        } else {
-          setTotalAvailable(totalAvailable);
-        }
+        // console.log(totalAvailable, 'totalAvailable');
+        // if (totalAvailable.toString().substr(-4) === "e+59") {
+        //   setTotalAvailable(0);
+        // } else {
+        setTotalAvailable(totalAvailable);
+        // }
         const balances = await contract.methods.balances(address).call()
         console.log(balances, 'balances');
-        setIsStrategic(balances.strategicInvestor);
+        // setIsStrategic(balances.strategicInvestor);
+
+        setShowData(true)
       } else {
         setTotalAvailable(0);
         setTotalReleased(0);
@@ -74,11 +77,11 @@ const VestingPage = (props: any) => {
         <div className="info-list" >
           <div className="info-list--item">
             <p>
-              Total Released
+              Total claimed
             </p>
 
             <p className="number">
-              {(!showData) ? '???' : numberWithCommas(totalReleased)}
+              {(!showData) ? '???' : numberWithCommas(totalReleased)} CWS
             </p>
           </div>
 
@@ -88,7 +91,7 @@ const VestingPage = (props: any) => {
             </p>
 
             <p className="number">
-              {(!showData) ? '???' : numberWithCommas(totalAvailable)}
+              {(!showData) ? '???' : numberWithCommas(totalAvailable)} CWS
             </p>
           </div>
 

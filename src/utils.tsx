@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import detectEthereumProvider from '@metamask/detect-provider';
 
-export function numberWithCommas(n: any = 0) {
+export function numberWithCommas(n: number) {
     var parts = n.toString().split(".");
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
 }
