@@ -106,7 +106,7 @@ const VestingPage = (props: any) => {
             </p>
 
             <p className="number">
-              {(!showData || !startTime) ? '???' : new Date(startTime * 1000 + Number(duration) * 1000).toLocaleString()}
+              {(!showData || !startTime) ? '???' : new Date(startTime * 1000 + Number(duration)).toLocaleString()}
             </p>
           </div>
         </div>
