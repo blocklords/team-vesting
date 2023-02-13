@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/moonscape/static/css/main.05f461a1.chunk.css",
-    "main.js": "/moonscape/static/js/main.49339f89.chunk.js",
-    "main.js.map": "/moonscape/static/js/main.49339f89.chunk.js.map",
-    "runtime-main.js": "/moonscape/static/js/runtime-main.653de56f.js",
-    "runtime-main.js.map": "/moonscape/static/js/runtime-main.653de56f.js.map",
-    "static/js/2.716fe900.chunk.js": "/moonscape/static/js/2.716fe900.chunk.js",
-    "static/js/2.716fe900.chunk.js.map": "/moonscape/static/js/2.716fe900.chunk.js.map",
-    "static/js/3.277706d1.chunk.js": "/moonscape/static/js/3.277706d1.chunk.js",
-    "static/js/3.277706d1.chunk.js.map": "/moonscape/static/js/3.277706d1.chunk.js.map",
-    "index.html": "/moonscape/index.html",
-    "static/css/main.05f461a1.chunk.css.map": "/moonscape/static/css/main.05f461a1.chunk.css.map",
-    "static/js/2.716fe900.chunk.js.LICENSE.txt": "/moonscape/static/js/2.716fe900.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/moonscape/static/media/gilroy-semibold.017ff10c.otf"
+    "main.css": "/team-vesting/static/css/main.5b2b831d.chunk.css",
+    "main.js": "/team-vesting/static/js/main.a91f8165.chunk.js",
+    "main.js.map": "/team-vesting/static/js/main.a91f8165.chunk.js.map",
+    "runtime-main.js": "/team-vesting/static/js/runtime-main.12a5cb29.js",
+    "runtime-main.js.map": "/team-vesting/static/js/runtime-main.12a5cb29.js.map",
+    "static/js/2.a25abbca.chunk.js": "/team-vesting/static/js/2.a25abbca.chunk.js",
+    "static/js/2.a25abbca.chunk.js.map": "/team-vesting/static/js/2.a25abbca.chunk.js.map",
+    "static/js/3.277706d1.chunk.js": "/team-vesting/static/js/3.277706d1.chunk.js",
+    "static/js/3.277706d1.chunk.js.map": "/team-vesting/static/js/3.277706d1.chunk.js.map",
+    "index.html": "/team-vesting/index.html",
+    "static/css/main.5b2b831d.chunk.css.map": "/team-vesting/static/css/main.5b2b831d.chunk.css.map",
+    "static/js/2.a25abbca.chunk.js.LICENSE.txt": "/team-vesting/static/js/2.a25abbca.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/team-vesting/static/media/gilroy-semibold.017ff10c.otf"
   },
   "entrypoints": [
-    "static/js/runtime-main.653de56f.js",
-    "static/js/2.716fe900.chunk.js",
-    "static/css/main.05f461a1.chunk.css",
-    "static/js/main.49339f89.chunk.js"
+    "static/js/runtime-main.12a5cb29.js",
+    "static/js/2.a25abbca.chunk.js",
+    "static/css/main.5b2b831d.chunk.css",
+    "static/js/main.a91f8165.chunk.js"
   ]
 }
