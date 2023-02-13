@@ -11,7 +11,7 @@ const main = async () => {
   // console.log("CrownsToken deployed to:", crownsToken.address);
 
   const TeamVesting = await ethers.getContractFactory("TeamVesting");
-  const teamVesting = await TeamVesting.deploy(TOKEN, 1675001400);
+  const teamVesting = await TeamVesting.deploy(TOKEN, 1676289782);
 
   await teamVesting.deployed();
 
@@ -24,7 +24,7 @@ const main = async () => {
 
   await run(`verify:verify`, {
     address: teamVesting.address,
-    constructorArguments: [TOKEN, 1675001400],
+    constructorArguments: [TOKEN, 1676289782],
   });
 
 }

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Countdown from "react-countdown";
 import Web3 from "web3";
 import { REACT_APP_DURATION, numberWithCommas, renderer, TOTAL_VESTING } from "../utils"
@@ -8,37 +8,38 @@ const VestingPage = (props: any) => {
   const [startTime, setStartTime] = useState<any>(0);
   const [totalReleased, setTotalReleased] = useState<any>(0);
   const [totalAvailable, setTotalAvailable] = useState<any>(0);
-  const [isStrategic, setIsStrategic] = useState<any>(false);
   const [showData, setShowData] = useState<any>(false);
+  const [duration, setDuration] = useState<any>(0);
+  const [isError, setIsError] = useState<any>(false);
 
   let start = (async () => {
     if (contract) {
+      setIsError(false);
+
       console.log('contract', contract);
       const startTime = await contract.methods.startTime().call();
       setStartTime(startTime);
-      // if (startTime <= Math.round(new Date().getTime() / 1000)) {
-      //   if (showData === false) {
-      //     setShowData(true)
-      //   }
-      // }
       if (address) {
-        let totalReleased = await contract.methods.getTotalReleased().call({ from: address });
-        totalReleased = parseFloat(Web3.utils.fromWei(totalReleased, "ether")).toFixed(6);
-        // console.log(totalReleased, 'totalReleased');
-        setTotalReleased(totalReleased);
-        let totalAvailable = await contract.methods.getAvailableAmount().call({ from: address });
-        totalAvailable = parseFloat(Web3.utils.fromWei(totalAvailable, "ether")).toFixed(6);
-        // console.log(totalAvailable, 'totalAvailable');
-        // if (totalAvailable.toString().substr(-4) === "e+59") {
-        //   setTotalAvailable(0);
-        // } else {
-        setTotalAvailable(totalAvailable);
-        // }
-        const balances = await contract.methods.balances(address).call()
-        console.log(balances, 'balances');
-        // setIsStrategic(balances.strategicInvestor);
+        let userDuration = await contract.methods.getDuration().call({ from: address });
+        setDuration(userDuration);
+        console.log(userDuration, 'userDuration')
 
-        setShowData(true)
+        if (userDuration === "0") {
+          setIsError(true);
+        } else {
+          setIsError(false);
+          let totalReleased = await contract.methods.getTotalReleased().call({ from: address });
+          totalReleased = parseFloat(Web3.utils.fromWei(totalReleased, "ether")).toFixed(6);
+          // console.log(totalReleased, 'totalReleased');
+          setTotalReleased(totalReleased);
+          let totalAvailable = await contract.methods.getAvailableAmount().call({ from: address });
+          totalAvailable = parseFloat(Web3.utils.fromWei(totalAvailable, "ether")).toFixed(6);
+          setTotalAvailable(totalAvailable);
+          const balances = await contract.methods.balances(address).call()
+          console.log(balances, 'balances');
+          setShowData(true)
+        }
+
       } else {
         setTotalAvailable(0);
         setTotalReleased(0);
@@ -47,7 +48,11 @@ const VestingPage = (props: any) => {
 
   })
 
-  start();
+  useEffect(() => {
+    start();
+  }, [address, contract])
+
+  // start();
 
   setInterval(async () => {
     start();
@@ -70,7 +75,7 @@ const VestingPage = (props: any) => {
 
   return (
     <div className="popup">
-      <div className="popup-inner">
+      {isError ? <div className="error error-text">You are not eligible for vesting.</div> : <div className="popup-inner">
         <h1>
           Team Token Vesting
         </h1>
@@ -101,7 +106,7 @@ const VestingPage = (props: any) => {
             </p>
 
             <p className="number">
-              {(!showData || !startTime) ? '???' : new Date(startTime * 1000 + Number(REACT_APP_DURATION)).toLocaleString()}
+              {(!showData || !startTime) ? '???' : new Date(startTime * 1000 + Number(duration) * 1000).toLocaleString()}
             </p>
           </div>
         </div>
@@ -113,7 +118,7 @@ const VestingPage = (props: any) => {
         }}>
           Claim
         </button>
-      </div>
+      </div>}
     </div>
   );
 }

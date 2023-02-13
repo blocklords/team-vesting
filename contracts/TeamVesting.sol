@@ -66,7 +66,40 @@ contract TeamVesting is Ownable {
 
         balances[_investor].remainingCoins = _monthlyAllowance * 24 * 10**18;
         balances[_investor].supply = balances[_investor].remainingCoins;
-        balances[_investor].duration = _daysDuration * 86400;
+        balances[_investor].duration = _daysDuration * 24 * 60 * 60 * 1000;
+
+        emit InvestorModified(_investor, balances[_investor].remainingCoins);
+    }
+
+    // write a function to modify the monthly allowance of an investor,
+    // but make sure to deduct the amount already released
+
+    /// @notice modify monthly allowance of an investor
+    /// @param _investor address to be modified
+    /// @param _monthlyAllowance is monthly allowance
+    function modifyInvestor(address _investor, uint256 _monthlyAllowance)
+        external
+        onlyOwner
+    {
+        require(
+            balances[_investor].remainingCoins > 0,
+            "investor doesnt have allocation"
+        );
+
+        uint256 timePassed = getDuration(balances[_investor].duration);
+        uint256 availableAmount = getAvailableTokens(
+            timePassed,
+            balances[_investor].remainingCoins,
+            balances[_investor].supply,
+            balances[_investor].duration
+        );
+
+        balances[_investor].remainingCoins =
+            availableAmount +
+            _monthlyAllowance *
+            24 *
+            10**18;
+        balances[_investor].supply = balances[_investor].remainingCoins;
 
         emit InvestorModified(_investor, balances[_investor].remainingCoins);
     }
@@ -107,6 +140,11 @@ contract TeamVesting is Ownable {
     //--------------------------------------------------------------------
     //  external getter functions
     //--------------------------------------------------------------------
+
+    // write a function that returns the duration of the vesting period
+    function getDuration() external view returns (uint256) {
+        return balances[msg.sender].duration;
+    }
 
     /// @notice get amount of tokens user has yet to withdraw
     /// @return amount of remaining coins

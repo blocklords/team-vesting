@@ -89,6 +89,11 @@
         "internalType": "uint256",
         "name": "_monthlyAllowance",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_daysDuration",
+        "type": "uint256"
       }
     ],
     "name": "addInvestor",
@@ -112,13 +117,13 @@
         "type": "uint256"
       },
       {
-        "internalType": "bool",
-        "name": "claimedBonus",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "supply",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "supply",
+        "name": "duration",
         "type": "uint256"
       }
     ],
@@ -153,6 +158,19 @@
   },
   {
     "inputs": [],
+    "name": "getDuration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getTotalReleased",
     "outputs": [
       {
@@ -162,6 +180,24 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_investor",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_monthlyAllowance",
+        "type": "uint256"
+      }
+    ],
+    "name": "modifyInvestor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
