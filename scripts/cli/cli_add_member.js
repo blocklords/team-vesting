@@ -12,6 +12,11 @@ const askMember = () => {
       type: "input",
       message: `what is the monthly allowance?`,
     },
+    {
+      name: "DURATION",
+      type: "input",
+      message: `what is the vesting duration in days?`,
+    },
   ];
   return inquirer.prompt(questions);
 };

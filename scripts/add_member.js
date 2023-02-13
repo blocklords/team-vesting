@@ -23,17 +23,19 @@ async function main() {
   let memberData = await askMember();
   let address = memberData.MEMBER;
   let allowance = memberData.ALLOWANCE;
+  let duration = memberData.DURATION;
 
   let params = {
     address: chalk.green(address),
     allowance: chalk.green(allowance),
+    duration: chalk.green(duration),
   };
 
   await inputConfirm(title, params);
 
   let teamVesting = TeamVesting.attach(VESTING);
 
-  const result = await teamVesting.addInvestor(address, allowance);
+  const result = await teamVesting.addInvestor(address, allowance, duration);
   console.log(result.hash);
 }
 

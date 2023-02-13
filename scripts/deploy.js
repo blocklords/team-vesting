@@ -1,21 +1,32 @@
-const { ethers } = require("hardhat");
+const { ethers, run } = require("hardhat");
 const { TOKEN, VESTING } = require("./addresses");
 
 const main = async () => {
 
-  const CrownsToken = await ethers.getContractFactory("CrownsToken");
-  const crownsToken = await CrownsToken.deploy();
+  // const CrownsToken = await ethers.getContractFactory("CrownsToken");
+  // const crownsToken = await CrownsToken.deploy();
 
-  await crownsToken.deployed();
+  // await crownsToken.deployed();
 
-  console.log("CrownsToken deployed to:", crownsToken.address);
+  // console.log("CrownsToken deployed to:", crownsToken.address);
 
   const TeamVesting = await ethers.getContractFactory("TeamVesting");
-  const teamVesting = await TeamVesting.deploy(TOKEN, 1674826044);
+  const teamVesting = await TeamVesting.deploy(TOKEN, 1675001400);
 
   await teamVesting.deployed();
 
   console.log("TeamVesting deployed to:", teamVesting.address);
+  const WAIT_BLOCK_CONFIRMATIONS = 6;
+  await teamVesting.deployTransaction.wait(WAIT_BLOCK_CONFIRMATIONS);
+
+
+  console.log(`Verifying contract on Etherscan...`);
+
+  await run(`verify:verify`, {
+    address: teamVesting.address,
+    constructorArguments: [TOKEN, 1675001400],
+  });
+
 }
 
 main().catch((error) => {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
 // import "./../openzeppelin/contracts/token/ERC20/SafeERC20.sol";
@@ -21,12 +22,12 @@ contract TeamVesting is Ownable {
     IERC20 private immutable token;
     uint256 public startTime;
     /// @dev vesting duration in seconds
-    uint256 private constant DURATION = 63072000; /// 2 years
+    // uint256 private constant DURATION = 63072000; /// 2 years
 
     struct Balance {
         uint256 remainingCoins;
-        bool claimedBonus; // true if "day one" tokens were claimed
         uint256 supply;
+        uint256 duration;
     }
 
     mapping(address => Balance) public balances;
@@ -53,16 +54,19 @@ contract TeamVesting is Ownable {
     /// @notice add strategic investor address
     /// @param _investor address to be added
     /// @param _monthlyAllowance is monthly allowance
-    function addInvestor(address _investor, uint256 _monthlyAllowance)
-        external
-        onlyOwner
-    {
+    function addInvestor(
+        address _investor,
+        uint256 _monthlyAllowance,
+        uint256 _daysDuration
+    ) external onlyOwner {
         require(
             balances[_investor].remainingCoins == 0,
             "investor already has allocation"
         );
 
         balances[_investor].remainingCoins = _monthlyAllowance * 24 * 10**18;
+        balances[_investor].supply = balances[_investor].remainingCoins;
+        balances[_investor].duration = _daysDuration * 86400;
 
         emit InvestorModified(_investor, balances[_investor].remainingCoins);
     }
@@ -75,6 +79,8 @@ contract TeamVesting is Ownable {
             "investor already disabled"
         );
         balances[_investor].remainingCoins = 0;
+        balances[_investor].supply = 0;
+        balances[_investor].duration = 0;
         emit InvestorModified(_investor, balances[_investor].remainingCoins);
     }
 
@@ -84,19 +90,15 @@ contract TeamVesting is Ownable {
         require(block.timestamp >= startTime, "vesting hasnt started yet");
         require(balance.remainingCoins > 0, "user has no allocation");
 
-        uint256 timePassed = getDuration();
+        uint256 timePassed = getDuration(balance.duration);
         uint256 availableAmount = getAvailableTokens(
             timePassed,
             balance.remainingCoins,
-            balance.supply
+            balance.supply,
+            balance.duration
         );
 
         balance.remainingCoins = balance.remainingCoins.sub(availableAmount);
-        if (!balance.claimedBonus) {
-            // @dev bonus should not be substracted from remaining coins
-            balance.claimedBonus = true;
-        }
-
         token.safeTransfer(msg.sender, availableAmount);
 
         emit Withdraw(msg.sender, availableAmount, balance.remainingCoins);
@@ -119,12 +121,13 @@ contract TeamVesting is Ownable {
     function getAvailableAmount() external view returns (uint256) {
         console.log("getAvailableAmount");
         Balance storage balance = balances[msg.sender];
-        uint256 timePassed = getDuration();
+        uint256 timePassed = getDuration(balance.duration);
         console.log("timePassed %s", timePassed);
         uint256 availableAmount = getAvailableTokens(
             timePassed,
             balance.remainingCoins,
-            balance.supply
+            balance.supply,
+            balance.duration
         );
         return availableAmount;
     }
@@ -136,10 +139,10 @@ contract TeamVesting is Ownable {
     /// @dev calculate how much time has passed since start.
     /// If vesting is finished, return length of the session
     /// @return duration of time in seconds
-    function getDuration() internal view returns (uint256) {
-        if (block.timestamp < startTime + DURATION)
+    function getDuration(uint256 _duration) internal view returns (uint256) {
+        if (block.timestamp < startTime + _duration)
             return block.timestamp - startTime;
-        return DURATION;
+        return _duration;
     }
 
     /// @dev calculate how many tokens are available for withdrawal
@@ -149,13 +152,14 @@ contract TeamVesting is Ownable {
     function getAvailableTokens(
         uint256 _timePassed,
         uint256 _remainingCoins,
-        uint256 _supply
+        uint256 _supply,
+        uint256 _duration
     ) internal view returns (uint256) {
         console.log("getAvailableTokens");
         console.log("_timePassed %s", _timePassed);
         console.log("_remainingCoins %s", _remainingCoins);
         console.log("_supply %s", _supply);
-        uint256 unclaimedPotential = ((_timePassed * _supply) / DURATION);
+        uint256 unclaimedPotential = ((_timePassed * _supply) / _duration);
         return unclaimedPotential - (_supply - _remainingCoins);
     }
 }
