@@ -1,23 +1,24 @@
 {
   "files": {
-    "main.css": "/team-vesting/static/css/main.5b2b831d.chunk.css",
-    "main.js": "/team-vesting/static/js/main.a91f8165.chunk.js",
-    "main.js.map": "/team-vesting/static/js/main.a91f8165.chunk.js.map",
-    "runtime-main.js": "/team-vesting/static/js/runtime-main.12a5cb29.js",
-    "runtime-main.js.map": "/team-vesting/static/js/runtime-main.12a5cb29.js.map",
-    "static/js/2.a25abbca.chunk.js": "/team-vesting/static/js/2.a25abbca.chunk.js",
-    "static/js/2.a25abbca.chunk.js.map": "/team-vesting/static/js/2.a25abbca.chunk.js.map",
-    "static/js/3.277706d1.chunk.js": "/team-vesting/static/js/3.277706d1.chunk.js",
-    "static/js/3.277706d1.chunk.js.map": "/team-vesting/static/js/3.277706d1.chunk.js.map",
+    "main.css": "/team-vesting/static/css/main.34f64f76.chunk.css",
+    "main.js": "/team-vesting/static/js/main.c82e1223.chunk.js",
+    "main.js.map": "/team-vesting/static/js/main.c82e1223.chunk.js.map",
+    "runtime-main.js": "/team-vesting/static/js/runtime-main.230cc43c.js",
+    "runtime-main.js.map": "/team-vesting/static/js/runtime-main.230cc43c.js.map",
+    "static/js/2.498f3755.chunk.js": "/team-vesting/static/js/2.498f3755.chunk.js",
+    "static/js/2.498f3755.chunk.js.map": "/team-vesting/static/js/2.498f3755.chunk.js.map",
+    "static/js/3.364e335f.chunk.js": "/team-vesting/static/js/3.364e335f.chunk.js",
+    "static/js/3.364e335f.chunk.js.map": "/team-vesting/static/js/3.364e335f.chunk.js.map",
     "index.html": "/team-vesting/index.html",
-    "static/css/main.5b2b831d.chunk.css.map": "/team-vesting/static/css/main.5b2b831d.chunk.css.map",
-    "static/js/2.a25abbca.chunk.js.LICENSE.txt": "/team-vesting/static/js/2.a25abbca.chunk.js.LICENSE.txt",
+    "static/css/main.34f64f76.chunk.css.map": "/team-vesting/static/css/main.34f64f76.chunk.css.map",
+    "static/js/2.498f3755.chunk.js.LICENSE.txt": "/team-vesting/static/js/2.498f3755.chunk.js.LICENSE.txt",
+    "static/js/main.c82e1223.chunk.js.LICENSE.txt": "/team-vesting/static/js/main.c82e1223.chunk.js.LICENSE.txt",
     "static/media/index.css": "/team-vesting/static/media/gilroy-semibold.017ff10c.otf"
   },
   "entrypoints": [
-    "static/js/runtime-main.12a5cb29.js",
-    "static/js/2.a25abbca.chunk.js",
-    "static/css/main.5b2b831d.chunk.css",
-    "static/js/main.a91f8165.chunk.js"
+    "static/js/runtime-main.230cc43c.js",
+    "static/js/2.498f3755.chunk.js",
+    "static/css/main.34f64f76.chunk.css",
+    "static/js/main.c82e1223.chunk.js"
   ]
 }
