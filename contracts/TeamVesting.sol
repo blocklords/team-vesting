@@ -56,9 +56,14 @@ contract TeamVesting is Ownable {
         uint256 _daysDuration
     ) external onlyOwner {
         require(
-            balances[_investor].remainingCoins == 0,
+            balances[_investor].duration == 0,
             "investor already has allocation"
         );
+
+        // make sure the parameters are valid
+        require(_monthlyAllowance > 0, "monthly allowance must be > 0");
+        require(_daysDuration > 0, "duration must be > 0");
+        require(_investor != address(0), "invalid address");
 
         balances[_investor].duration = _daysDuration * 24 * 60 * 60;
         uint256 _yearlyAllowance = _monthlyAllowance * 12;
@@ -73,39 +78,6 @@ contract TeamVesting is Ownable {
         emit InvestorModified(_investor, balances[_investor].remainingCoins);
     }
 
-    // write a function to modify the monthly allowance of an investor,
-    // but make sure to deduct the amount already released
-
-    /// @notice modify monthly allowance of an investor
-    /// @param _investor address to be modified
-    /// @param _monthlyAllowance is monthly allowance
-    function modifyInvestor(address _investor, uint256 _monthlyAllowance)
-        external
-        onlyOwner
-    {
-        require(
-            balances[_investor].remainingCoins > 0,
-            "investor doesnt have allocation"
-        );
-
-        uint256 timePassed = getDuration(balances[_investor].duration);
-        uint256 availableAmount = getAvailableTokens(
-            timePassed,
-            balances[_investor].remainingCoins,
-            balances[_investor].supply,
-            balances[_investor].duration
-        );
-
-        balances[_investor].remainingCoins =
-            availableAmount +
-            _monthlyAllowance *
-            24 *
-            10**18;
-        balances[_investor].supply = balances[_investor].remainingCoins;
-
-        emit InvestorModified(_investor, balances[_investor].remainingCoins);
-    }
-
     /// @notice set investor remaining coins to 0
     /// @param _investor address to disable
     function disableInvestor(address _investor) external onlyOwner {
@@ -113,10 +85,8 @@ contract TeamVesting is Ownable {
             balances[_investor].remainingCoins > 0,
             "investor already disabled"
         );
-        balances[_investor].remainingCoins = 0;
-        balances[_investor].supply = 0;
-        balances[_investor].duration = 0;
-        emit InvestorModified(_investor, balances[_investor].remainingCoins);
+        delete balances[_investor];
+        emit InvestorModified(_investor, 0);
     }
 
     /// @notice clam the unlocked tokens
