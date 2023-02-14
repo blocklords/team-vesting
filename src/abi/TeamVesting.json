@@ -183,24 +183,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investor",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_monthlyAllowance",
-        "type": "uint256"
-      }
-    ],
-    "name": "modifyInvestor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "owner",
     "outputs": [
