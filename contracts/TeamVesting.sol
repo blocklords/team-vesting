@@ -1,9 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.9.0;
-
-// import "./../openzeppelin/contracts/token/ERC20/SafeERC20.sol";
-// import "./../openzeppelin/contracts/access/Ownable.sol";
-// import "./../openzeppelin/contracts/math/SafeMath.sol";
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -39,7 +35,7 @@ contract TeamVesting is Ownable {
         uint256 remainingCoins
     );
 
-    constructor(IERC20 _token, uint256 _startTime) public {
+    constructor(IERC20 _token, uint256 _startTime) {
         require(address(_token) != address(0), "invalid currency address");
         require(_startTime > block.timestamp, "vesting should start in future");
 
