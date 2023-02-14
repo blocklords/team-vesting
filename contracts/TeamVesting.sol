@@ -85,8 +85,9 @@ contract TeamVesting is Ownable {
             balances[_investor].remainingCoins > 0,
             "investor already disabled"
         );
+        uint256 _remainingCoins = balances[_investor].remainingCoins;
         delete balances[_investor];
-        emit InvestorModified(_investor, 0);
+        emit InvestorModified(_investor, _remainingCoins);
     }
 
     /// @notice clam the unlocked tokens
