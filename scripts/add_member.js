@@ -35,7 +35,7 @@ async function main() {
 
   let teamVesting = TeamVesting.attach(VESTING);
 
-  const result = await teamVesting.addInvestor(address, allowance, duration);
+  const result = await teamVesting.addInvestor(address, allowance * 10 ** 18, duration);
   console.log(result.hash);
 }
 

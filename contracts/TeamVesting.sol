@@ -69,10 +69,7 @@ contract TeamVesting is Ownable {
         uint256 _yearlyAllowance = _monthlyAllowance * 12;
         uint256 _dailyAllowance = _yearlyAllowance / 365;
 
-        balances[_investor].remainingCoins =
-            _daysDuration *
-            _dailyAllowance *
-            10**18;
+        balances[_investor].remainingCoins = _daysDuration * _dailyAllowance;
         balances[_investor].supply = balances[_investor].remainingCoins;
 
         emit InvestorModified(_investor, balances[_investor].remainingCoins);
