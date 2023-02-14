@@ -64,9 +64,15 @@ contract TeamVesting is Ownable {
             "investor already has allocation"
         );
 
-        balances[_investor].remainingCoins = _monthlyAllowance * 24 * 10**18;
+        balances[_investor].duration = _daysDuration * 24 * 60 * 60;
+        uint256 _yearlyAllowance = _monthlyAllowance * 12;
+        uint256 _dailyAllowance = _yearlyAllowance / 365;
+
         balances[_investor].supply = balances[_investor].remainingCoins;
-        balances[_investor].duration = _daysDuration * 24 * 60 * 60 * 1000;
+        balances[_investor].remainingCoins =
+            _daysDuration *
+            _dailyAllowance *
+            10**18;
 
         emit InvestorModified(_investor, balances[_investor].remainingCoins);
     }
