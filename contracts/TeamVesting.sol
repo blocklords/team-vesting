@@ -112,23 +112,31 @@ contract TeamVesting is Ownable {
     //--------------------------------------------------------------------
 
     // write a function that returns the duration of the vesting period
-    function getDuration() external view returns (uint256) {
-        return balances[msg.sender].duration;
+    function getDuration(address _investor) external view returns (uint256) {
+        return balances[_investor].duration;
     }
 
     /// @notice get amount of tokens user has yet to withdraw
     /// @return amount of remaining coins
-    function getTotalReleased() external view returns (uint256) {
+    function getTotalReleased(address _investor)
+        external
+        view
+        returns (uint256)
+    {
         console.log("getTotalReleased");
-        uint256 totalReleased = balances[msg.sender].supply -
-            balances[msg.sender].remainingCoins;
+        uint256 totalReleased = balances[_investor].supply -
+            balances[_investor].remainingCoins;
         console.log("totalReleased %s", totalReleased);
         return totalReleased;
     }
 
-    function getAvailableAmount() external view returns (uint256) {
+    function getAvailableAmount(address _investor)
+        external
+        view
+        returns (uint256)
+    {
         console.log("getAvailableAmount");
-        Balance storage balance = balances[msg.sender];
+        Balance storage balance = balances[_investor];
         uint256 timePassed = getDuration(balance.duration);
         console.log("timePassed %s", timePassed);
         uint256 availableAmount = getAvailableTokens(
