@@ -17,6 +17,22 @@ const supportedChains: IChainData[] = [
       balance: "",
     },
   },
+  {
+    name: "Goerli test network",
+    short_name: "goerli",
+    chain: "smartchain",
+    network: "testnet",
+    chain_id: 5,
+    network_id: 5,
+    rpc_url: "https://goerli.infura.io/v3/",
+    native_currency: {
+      symbol: "GoerliETH",
+      name: "GoerliETH",
+      decimals: "18",
+      contractAddress: "",
+      balance: "",
+    },
+  },
 ];
 
 export default supportedChains;
