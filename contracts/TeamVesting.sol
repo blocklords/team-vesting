@@ -156,7 +156,7 @@ contract TeamVesting is Ownable {
     /// If vesting is finished, return length of the session
     /// @return duration of time in seconds
     function getDuration(uint256 _startTime, uint256 _duration)
-        internal
+        public
         view
         returns (uint256)
     {
@@ -174,7 +174,7 @@ contract TeamVesting is Ownable {
         uint256 _remainingCoins,
         uint256 _supply,
         uint256 _duration
-    ) internal view returns (uint256) {
+    ) public view returns (uint256) {
         console.log("getAvailableTokens");
         console.log("_timePassed %s", _timePassed);
         console.log("_remainingCoins %s", _remainingCoins);

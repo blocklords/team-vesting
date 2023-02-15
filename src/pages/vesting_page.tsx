@@ -37,6 +37,7 @@ const VestingPage = (props: any) => {
           setTotalAvailable(totalAvailable);
           const balances = await contract.methods.balances(address).call()
           console.log(balances, 'balances');
+          setStartTime(balances.startTime);
           setShowData(true)
         }
 
@@ -105,9 +106,9 @@ const VestingPage = (props: any) => {
               Vesting ends on
             </p>
 
-            {/* <p className="number">
-              {(!showData || !startTime) ? '???' : new Date(startTime * 1000 + Number(duration)).toLocaleString()}
-            </p> */}
+            <p className="number">
+              {(!showData || !duration) ? '???' : new Date(duration * 1000 + Number(startTime) * 1000).toLocaleString()}
+            </p>
           </div>
         </div>
         <span className="spacer"></span>
