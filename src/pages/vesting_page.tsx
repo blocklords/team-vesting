@@ -17,10 +17,10 @@ const VestingPage = (props: any) => {
       setIsError(false);
 
       console.log('contract', contract);
-      const startTime = await contract.methods.startTime().call();
-      setStartTime(startTime);
+      // const startTime = await contract.methods.startTime().call();
+      // setStartTime(startTime);
       if (address) {
-        let userDuration = await contract.methods.getDuration().call({ from: address });
+        let userDuration = await contract.methods.getDuration(address).call({ from: address });
         setDuration(userDuration);
         console.log(userDuration, 'userDuration')
 
@@ -28,11 +28,11 @@ const VestingPage = (props: any) => {
           setIsError(true);
         } else {
           setIsError(false);
-          let totalReleased = await contract.methods.getTotalReleased().call({ from: address });
+          let totalReleased = await contract.methods.getTotalReleased(address).call({ from: address });
           totalReleased = parseFloat(Web3.utils.fromWei(totalReleased, "ether")).toFixed(6);
           // console.log(totalReleased, 'totalReleased');
           setTotalReleased(totalReleased);
-          let totalAvailable = await contract.methods.getAvailableAmount().call({ from: address });
+          let totalAvailable = await contract.methods.getAvailableAmount(address).call({ from: address });
           totalAvailable = parseFloat(Web3.utils.fromWei(totalAvailable, "ether")).toFixed(6);
           setTotalAvailable(totalAvailable);
           const balances = await contract.methods.balances(address).call()
@@ -105,9 +105,9 @@ const VestingPage = (props: any) => {
               Vesting ends on
             </p>
 
-            <p className="number">
+            {/* <p className="number">
               {(!showData || !startTime) ? '???' : new Date(startTime * 1000 + Number(duration)).toLocaleString()}
-            </p>
+            </p> */}
           </div>
         </div>
         <span className="spacer"></span>
