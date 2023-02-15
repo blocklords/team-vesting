@@ -5,11 +5,6 @@
         "internalType": "contract IERC20",
         "name": "_token",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_startTime",
-        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -87,12 +82,17 @@
       },
       {
         "internalType": "uint256",
-        "name": "_monthlyAllowance",
+        "name": "_dailyAllowance",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
         "name": "_daysDuration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTime",
         "type": "uint256"
       }
     ],
@@ -124,6 +124,11 @@
       {
         "internalType": "uint256",
         "name": "duration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startTime",
         "type": "uint256"
       }
     ],
@@ -165,9 +170,67 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_timePassed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_remainingCoins",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_supply",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_duration",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAvailableTokens",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_investor",
         "type": "address"
+      }
+    ],
+    "name": "getDuration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_duration",
+        "type": "uint256"
       }
     ],
     "name": "getDuration",
@@ -218,19 +281,6 @@
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "startTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
