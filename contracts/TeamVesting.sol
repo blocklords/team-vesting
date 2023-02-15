@@ -16,14 +16,12 @@ contract TeamVesting is Ownable {
 
     /// @dev session data
     IERC20 private immutable token;
-    uint256 public startTime;
-    /// @dev vesting duration in seconds
-    // uint256 private constant DURATION = 63072000; /// 2 years
 
     struct Balance {
         uint256 remainingCoins;
         uint256 supply;
         uint256 duration;
+        uint256 startTime;
     }
 
     mapping(address => Balance) public balances;
@@ -35,12 +33,10 @@ contract TeamVesting is Ownable {
         uint256 remainingCoins
     );
 
-    constructor(IERC20 _token, uint256 _startTime) {
+    constructor(IERC20 _token) {
         require(address(_token) != address(0), "invalid currency address");
-        require(_startTime > block.timestamp, "vesting should start in future");
 
         token = _token;
-        startTime = _startTime;
     }
 
     //--------------------------------------------------------------------
@@ -53,7 +49,8 @@ contract TeamVesting is Ownable {
     function addInvestor(
         address _investor,
         uint256 _dailyAllowance,
-        uint256 _daysDuration
+        uint256 _daysDuration,
+        uint256 _startTime
     ) external onlyOwner {
         require(
             balances[_investor].duration == 0,
@@ -64,10 +61,12 @@ contract TeamVesting is Ownable {
         require(_dailyAllowance > 0, "daily allowance must be > 0");
         require(_daysDuration > 0, "duration must be > 0");
         require(_investor != address(0), "invalid address");
+        require(_startTime > block.timestamp, "vesting should start in future");
 
         balances[_investor].duration = _daysDuration * 24 * 60 * 60;
         balances[_investor].remainingCoins = _daysDuration * _dailyAllowance;
         balances[_investor].supply = balances[_investor].remainingCoins;
+        balances[_investor].startTime = _startTime;
 
         emit InvestorModified(_investor, balances[_investor].remainingCoins);
     }
@@ -87,10 +86,14 @@ contract TeamVesting is Ownable {
     /// @notice clam the unlocked tokens
     function withdraw() external {
         Balance storage balance = balances[msg.sender];
-        require(block.timestamp >= startTime, "vesting hasnt started yet");
+        require(balance.duration > 0, "user has no allocation");
+        require(
+            block.timestamp >= balance.startTime,
+            "vesting for you hasnt started yet"
+        );
         require(balance.remainingCoins > 0, "user has no allocation");
 
-        uint256 timePassed = getDuration(balance.duration);
+        uint256 timePassed = getDuration(balance.startTime, balance.duration);
         uint256 availableAmount = getAvailableTokens(
             timePassed,
             balance.remainingCoins,
@@ -134,7 +137,7 @@ contract TeamVesting is Ownable {
     {
         console.log("getAvailableAmount");
         Balance storage balance = balances[_investor];
-        uint256 timePassed = getDuration(balance.duration);
+        uint256 timePassed = getDuration(balance.startTime, balance.duration);
         console.log("timePassed %s", timePassed);
         uint256 availableAmount = getAvailableTokens(
             timePassed,
@@ -152,9 +155,13 @@ contract TeamVesting is Ownable {
     /// @dev calculate how much time has passed since start.
     /// If vesting is finished, return length of the session
     /// @return duration of time in seconds
-    function getDuration(uint256 _duration) internal view returns (uint256) {
-        if (block.timestamp < startTime + _duration)
-            return block.timestamp - startTime;
+    function getDuration(uint256 _startTime, uint256 _duration)
+        internal
+        view
+        returns (uint256)
+    {
+        if (block.timestamp < _startTime + _duration)
+            return block.timestamp - _startTime;
         return _duration;
     }
 
