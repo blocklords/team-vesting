@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.b8e3f68e.chunk.css",
-    "main.js": "/static/js/main.d700c8aa.chunk.js",
-    "main.js.map": "/static/js/main.d700c8aa.chunk.js.map",
+    "main.js": "/static/js/main.5a33ae4c.chunk.js",
+    "main.js.map": "/static/js/main.5a33ae4c.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.c5029beb.js",
     "runtime-main.js.map": "/static/js/runtime-main.c5029beb.js.map",
     "static/js/2.541dffcc.chunk.js": "/static/js/2.541dffcc.chunk.js",
@@ -12,13 +12,13 @@
     "index.html": "/index.html",
     "static/css/main.b8e3f68e.chunk.css.map": "/static/css/main.b8e3f68e.chunk.css.map",
     "static/js/2.541dffcc.chunk.js.LICENSE.txt": "/static/js/2.541dffcc.chunk.js.LICENSE.txt",
-    "static/js/main.d700c8aa.chunk.js.LICENSE.txt": "/static/js/main.d700c8aa.chunk.js.LICENSE.txt",
+    "static/js/main.5a33ae4c.chunk.js.LICENSE.txt": "/static/js/main.5a33ae4c.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/gilroy-semibold.017ff10c.otf"
   },
   "entrypoints": [
     "static/js/runtime-main.c5029beb.js",
     "static/js/2.541dffcc.chunk.js",
     "static/css/main.b8e3f68e.chunk.css",
-    "static/js/main.d700c8aa.chunk.js"
+    "static/js/main.5a33ae4c.chunk.js"
   ]
 }
