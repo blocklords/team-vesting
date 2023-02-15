@@ -49,10 +49,10 @@ contract TeamVesting is Ownable {
 
     /// @notice add strategic investor address
     /// @param _investor address to be added
-    /// @param _monthlyAllowance is monthly allowance
+    /// @param _dailyAllowance is daily allowance
     function addInvestor(
         address _investor,
-        uint256 _monthlyAllowance,
+        uint256 _dailyAllowance,
         uint256 _daysDuration
     ) external onlyOwner {
         require(
@@ -61,14 +61,11 @@ contract TeamVesting is Ownable {
         );
 
         // make sure the parameters are valid
-        require(_monthlyAllowance > 0, "monthly allowance must be > 0");
+        require(_dailyAllowance > 0, "daily allowance must be > 0");
         require(_daysDuration > 0, "duration must be > 0");
         require(_investor != address(0), "invalid address");
 
         balances[_investor].duration = _daysDuration * 24 * 60 * 60;
-        uint256 _yearlyAllowance = _monthlyAllowance * 12;
-        uint256 _dailyAllowance = _yearlyAllowance / 365;
-
         balances[_investor].remainingCoins = _daysDuration * _dailyAllowance;
         balances[_investor].supply = balances[_investor].remainingCoins;
 
